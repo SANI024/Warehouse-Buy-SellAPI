@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+﻿using Microsoft.EntityFrameworkCore;
+using Warehouse_Buy_Sell.Data;
 using Warehouse_Buy_Sell.Models;
+
+
 namespace Warehouse_Buy_Sell.Data
 {
     public class AppDbContext : DbContext
@@ -37,10 +38,8 @@ namespace Warehouse_Buy_Sell.Data
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasIndex(e => e.PersonalNumber).IsUnique();
-               
             });
 
-           
             // Purchase
             modelBuilder.Entity<Purchase>(entity =>
             {
@@ -53,8 +52,6 @@ namespace Warehouse_Buy_Sell.Data
                     .WithMany(s => s.purchase)
                     .HasForeignKey(p => p.SupplierId)
                     .OnDelete(DeleteBehavior.Restrict);
-
-               
             });
 
             // Purchase Item
@@ -83,8 +80,6 @@ namespace Warehouse_Buy_Sell.Data
                     .WithMany(c => c.sale)
                     .HasForeignKey(s => s.CustomerId)
                     .OnDelete(DeleteBehavior.Restrict);
-
-                
             });
 
             // Sale Item
@@ -113,8 +108,6 @@ namespace Warehouse_Buy_Sell.Data
                     .WithMany(w => w.MovementsTo)
                     .HasForeignKey(im => im.ToWarehouseId)
                     .OnDelete(DeleteBehavior.Restrict);
-
-               
             });
 
             // Internal Movement Item
@@ -145,8 +138,6 @@ namespace Warehouse_Buy_Sell.Data
                     .WithMany(p => p.inventories)
                     .HasForeignKey(i => i.ProductId)
                     .OnDelete(DeleteBehavior.Restrict);
-
-               
             });
 
             // User
@@ -154,44 +145,7 @@ namespace Warehouse_Buy_Sell.Data
             {
                 entity.HasIndex(e => e.Username).IsUnique();
                 entity.HasIndex(e => e.Email).IsUnique();
-               
             });
-        }
-
-        public override int SaveChanges()
-        {
-            UpdateTimestamps();
-            return base.SaveChanges();
-        }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            UpdateTimestamps();
-            return base.SaveChangesAsync(cancellationToken);
-        }
-
-        private void UpdateTimestamps()
-        {
-            var entries = ChangeTracker.Entries()
-                .Where(e => e.Entity is Supplier || e.Entity is Customer ||
-                           e.Entity is Product || e.Entity is Warehouse ||
-                           e.Entity is Purchase || e.Entity is Sale ||
-                           e.Entity is InternalMovement || e.Entity is User);
-
-            foreach (var entry in entries)
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
-                    entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
-                }
-                else if (entry.State == EntityState.Modified)
-                {
-                    entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
-                }
-            }
         }
     }
 }
-    
-

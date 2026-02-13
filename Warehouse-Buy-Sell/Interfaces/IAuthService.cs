@@ -5,7 +5,7 @@ namespace Warehouse_Buy_Sell.Interfaces
 {
     public interface IAuthService
     {
-        Task<User> RegisterAsync(UserDto dto);
-        Task<User> LoginAsync(UserDto dto);
+        Task<ApiResponce<AuthResponceDto>> LoginAsync(LoginDto dto);
+        Task<ApiResponce<AuthResponceDto>> RegisterAsync(RegisterDto dto);
     }
 }
