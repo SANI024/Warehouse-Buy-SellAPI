@@ -12,8 +12,8 @@ using Warehouse_Buy_Sell.Data;
 namespace Warehouse_Buy_Sell.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260211160901_initialization")]
-    partial class initialization
+    [Migration("20260213194854_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,6 +231,9 @@ namespace Warehouse_Buy_Sell.Migrations
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal?>("TotalAmount")
                         .HasColumnType("decimal(12,2)");

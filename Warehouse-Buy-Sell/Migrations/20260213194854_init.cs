@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Warehouse_Buy_Sell.Migrations
 {
     /// <inheritdoc />
-    public partial class initialization : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,6 +174,7 @@ namespace Warehouse_Buy_Sell.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SaleDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WarehouseId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(12,2)", nullable: true)

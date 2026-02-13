@@ -5,6 +5,7 @@ namespace Warehouse_Buy_Sell.Models
     public class InternalMovement
     {
         public int Id { get; set; }
+        public DateTime MovementDate { get; set; }
 
         [Required]
         public int FromWarehouseId { get; set; }
