@@ -14,7 +14,7 @@ namespace Warehouse_Buy_Sell.Services
         {
             _context = context;
         }
-        public async Task<ApiResponce<PurchaseResponceDto>> CreateAsync(PurchaseResponceDto dto)
+        public async Task<ApiResponce<PurchaseResponceDto>> CreateAsync(PurchaseCreateDto dto)
         {
             var warehouse = await _context.Warehouses.FindAsync(dto.WarehouseId);
             if (warehouse == null)
@@ -131,10 +131,6 @@ namespace Warehouse_Buy_Sell.Services
             return ApiResponce<PurchaseResponceDto>.Ok(MapToResponse(purchase));
         }
 
-        public Task<ApiResponce<PurchaseResponceDto>> UpdateAsync(int id, PurchaseResponceDto dto)
-        {
-            throw new NotImplementedException();
-        }
         private static PurchaseResponceDto MapToResponse(Purchase p) => new PurchaseResponceDto
         {
             Id = p.Id,

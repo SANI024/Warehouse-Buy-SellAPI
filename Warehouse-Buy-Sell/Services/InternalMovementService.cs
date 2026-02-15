@@ -125,14 +125,15 @@ namespace Warehouse_Buy_Sell.Services
         public async Task<ApiResponce<List<InternalMovementResponceDto>>> GetAllAsync()
         {
             var movements = await _context.InternalMovements
-               .Include(m => m.fromWarehouse)
-               .Include(m => m.toWarehouse)
-               .Include(m => m.internalMovementItems)
-                   .ThenInclude(i => i.product)
-               .Select(m => MapToResponse(m))
-               .ToListAsync();
+         .Include(m => m.fromWarehouse)
+         .Include(m => m.toWarehouse)
+         .Include(m => m.internalMovementItems)
+             .ThenInclude(i => i.product)
+         .ToListAsync(); 
 
-            return ApiResponce<List<InternalMovementResponceDto>>.Ok(movements);
+            var result = movements.Select(m => MapToResponse(m)).ToList(); 
+
+            return ApiResponce<List<InternalMovementResponceDto>>.Ok(result);
         }
 
         public  async Task<ApiResponce<InternalMovementResponceDto>> GetByIdAsync(int id)
@@ -150,7 +151,7 @@ namespace Warehouse_Buy_Sell.Services
             return ApiResponce<InternalMovementResponceDto>.Ok(MapToResponse(movement));
         }
 
-        private InternalMovementResponceDto MapToResponse(InternalMovement m) => new InternalMovementResponceDto
+        private static  InternalMovementResponceDto MapToResponse(InternalMovement m) => new InternalMovementResponceDto
         {
             Id = m.Id,
             MovementDate = m.MovementDate,

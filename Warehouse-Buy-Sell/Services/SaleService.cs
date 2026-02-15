@@ -58,8 +58,8 @@ namespace Warehouse_Buy_Sell.Services
                 {
                     ProductId = i.ProductId,
                     Quantity = i.Quantity,
-                    UnitPrice = i.UnitPrice,
-                    Subtotal = i.Quantity * i.UnitPrice
+                    UnitPrice = products.First(p => p.Id == i.ProductId).SalePrice,
+                    Subtotal = i.Quantity * products.First(p => p.Id == i.ProductId).SalePrice
                 }).ToList()
             };
 

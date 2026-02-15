@@ -6,8 +6,7 @@ namespace Warehouse_Buy_Sell.Interfaces
     {
         Task<ApiResponce<List<PurchaseResponceDto>>> GetAllAsync();
         Task<ApiResponce<PurchaseResponceDto>> GetByIdAsync(int id);
-        Task<ApiResponce<PurchaseResponceDto>> CreateAsync(PurchaseResponceDto dto);
-        Task<ApiResponce<PurchaseResponceDto>> UpdateAsync(int id, PurchaseResponceDto dto);
+        Task<ApiResponce<PurchaseResponceDto>> CreateAsync(PurchaseCreateDto dto);
         Task<ApiResponce<bool>> DeleteAsync(int id);
     }
 }
